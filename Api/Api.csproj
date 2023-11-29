@@ -10,6 +10,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <!--to be able to communicate with SQL server via EF-->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+    <!--to be able to add/remove migration to our SQL server-->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <!-- Authenticate user using JWT Bearer -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
+    <!--to be able to create, serialize and validate JSON Web Tokens-->
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+    <!--to be able to derive from IdentityDbContext inside our context.cs-->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
   </ItemGroup>
 
   <ItemGroup>
