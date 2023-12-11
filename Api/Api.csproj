@@ -30,10 +30,16 @@
     <None Remove="Controllers\" />
     <None Remove="Models\" />
     <None Remove="Data\" />
+    <None Remove="Data\Migrations\" />
+    <None Remove="DTOs\" />
+    <None Remove="DTOs\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Data\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Account\" />
   </ItemGroup>
 </Project>

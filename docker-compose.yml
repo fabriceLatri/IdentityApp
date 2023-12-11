@@ -9,23 +9,24 @@ services:
       ACCEPT_EULA: Y
       MSSQL_PID: Express
     ports:
-      - "1433:1433"
+      - '1433:1433'
     networks:
       - app-network
     volumes:
       - ./data:/var/opt/mssql/data
 
-  your-dotnet-app:
-    build:
-      context: .
-      dockerfile: ./Api/Dockerfile
-    depends_on:
-      - sql-server
-    networks:
-      - app-network
-    environment:
-      - ConnectionStrings__DefaultConnection = ${MSSQL_STRING_CONNECTION}
-    
+  # your-dotnet-app:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Api/Dockerfile
+  #   depends_on:
+  #     - sql-server
+  #   ports:
+  #     - '5186:80'
+  #   networks:
+  #     - app-network
+  #   environment:
+  #     - ConnectionStrings__DefaultConnection = ${MSSQL_STRING_CONNECTION}
 
 networks:
   app-network:
