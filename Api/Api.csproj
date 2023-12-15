@@ -24,6 +24,8 @@
     <!--to be able to derive from IdentityDbContext inside our context.cs-->
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,8 @@
     <None Remove="Data\Migrations\" />
     <None Remove="DTOs\" />
     <None Remove="DTOs\Account\" />
+    <None Remove="Mappers\" />
+    <None Remove="Mappers\Profiles\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -41,5 +45,12 @@
     <Folder Include="Data\Migrations\" />
     <Folder Include="DTOs\" />
     <Folder Include="DTOs\Account\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Mappers\Profiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

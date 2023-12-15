@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Api.DTOs.Account;
 using Api.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,15 +20,18 @@ namespace Api.Controllers
         private readonly JWTService _jwtService;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
         public AccountController(
             JWTService jwtService,
             SignInManager<User> signInManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IMapper mapper)
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         [Authorize]
@@ -79,12 +83,9 @@ namespace Api.Controllers
         #region Private Helper Methods
         private UserDto CreateApplicationUserDto(User user)
         {
-            return new UserDto
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                JWT = _jwtService.CreateJWT(user)
-            };
+            UserDto dto = _mapper.Map<UserDto>(user);
+
+            return dto;
         }
 
         private async Task<bool> CheckEmailExists(string email)
