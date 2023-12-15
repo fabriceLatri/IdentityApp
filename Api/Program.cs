@@ -28,6 +28,10 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
 builder.Services.AddScoped<JWTService>();
 
 // Defining our Identity Service
