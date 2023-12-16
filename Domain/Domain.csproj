@@ -6,4 +6,36 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="UseCases\" />
+    <None Remove="Ports\" />
+    <None Remove="Ports\Driving\" />
+    <None Remove="Models\" />
+    <None Remove="Models\Account\" />
+    <None Remove="Ports\Driving\Account\" />
+    <None Remove="UseCases\Account\" />
+    <None Remove="Ports\Driven\" />
+    <None Remove="Ports\Driven\Account\" />
+    <None Remove="Exceptions\" />
+    <None Remove="Exceptions\Account\" />
+    <None Remove="Ports\Driving\DTOs\" />
+    <None Remove="Ports\Driving\DTOs\Account\" />
+    <None Remove="Models\Mapper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases\" />
+    <Folder Include="Ports\" />
+    <Folder Include="Ports\Driving\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\Account\" />
+    <Folder Include="Ports\Driving\Account\" />
+    <Folder Include="UseCases\Account\" />
+    <Folder Include="Ports\Driven\" />
+    <Folder Include="Ports\Driven\Account\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Exceptions\Account\" />
+    <Folder Include="Ports\Driving\DTOs\" />
+    <Folder Include="Ports\Driving\DTOs\Account\" />
+    <Folder Include="Models\Mapper\" />
+  </ItemGroup>
 </Project>
