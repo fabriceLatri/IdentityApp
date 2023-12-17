@@ -1,8 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Api.DTOs.Account;
-using Api.Models;
+using Api.DrivenAdapters.Entities.Account;
+using Api.DrivingAdapters.DTOs.Account;
 using AutoMapper;
+using Domain.Models.Account;
+using Domain.Ports.Driving.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Api.Controllers
+namespace Api.DrivingAdapters.RestAdapters
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -21,24 +24,28 @@ namespace Api.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly ILoginCase _loginCase;
 
         public AccountController(
             JWTService jwtService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            ILoginCase loginCase
+            )
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
+            _loginCase = loginCase;
         }
 
         [Authorize]
         [HttpGet("refresh-user-token")]
         public async Task<ActionResult<UserDto>> RefreshUserToken()
         {
-            User user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+            IUser user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
 
             return CreateApplicationUserDto(user);
         }
@@ -46,17 +53,15 @@ namespace Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            try
+            {
+                var user = await _loginCase.Execute(model.Email, model.Password);
 
-            if (user == null) return Unauthorized("Invalid username or password");
-
-            if (!user.EmailConfirmed) return Unauthorized("Please confirm your email");
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-
-            if (!result.Succeeded) return Unauthorized("Invalid username or password");
-
-            return CreateApplicationUserDto(user);
+                return _mapper.Map<UserDto>(user);
+            } catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
 
         [HttpPost("register")]
@@ -81,7 +86,7 @@ namespace Api.Controllers
         }
 
         #region Private Helper Methods
-        private UserDto CreateApplicationUserDto(User user)
+        private UserDto CreateApplicationUserDto(IUser user)
         {
             UserDto dto = _mapper.Map<UserDto>(user);
 

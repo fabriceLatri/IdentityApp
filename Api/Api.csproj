@@ -29,24 +29,36 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Controllers\" />
-    <None Remove="Models\" />
-    <None Remove="Data\" />
-    <None Remove="Data\Migrations\" />
-    <None Remove="DTOs\" />
-    <None Remove="DTOs\Account\" />
-    <None Remove="Mappers\" />
-    <None Remove="Mappers\Profiles\" />
+    <None Remove="DrivenAdapters\" />
+    <None Remove="DrivenAdapters\DatabaseAdapters\" />
+    <None Remove="DrivenAdapters\DatabaseAdapters\Configuration\" />
+    <None Remove="DrivenAdapters\AuthentificationAdapters\" />
+    <None Remove="DrivenAdapters\AuthentificationAdapters\Configuration\" />
+    <None Remove="DrivenAdapters\Entities\" />
+    <None Remove="DrivenAdapters\Entities\Account\" />
+    <None Remove="DrivenAdapters\Migrations\" />
+    <None Remove="DrivenAdapters\Services\" />
+    <None Remove="DrivingAdapters\" />
+    <None Remove="DrivingAdapters\DTOs\" />
+    <None Remove="DrivingAdapters\RestAdapters\" />
+    <None Remove="DrivingAdapters\Mappings\" />
+    <None Remove="DrivingAdapters\Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Data\" />
-    <Folder Include="Data\Migrations\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="DTOs\Account\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Mappers\Profiles\" />
+    <Folder Include="DrivenAdapters\" />
+    <Folder Include="DrivenAdapters\DatabaseAdapters\" />
+    <Folder Include="DrivenAdapters\DatabaseAdapters\Configuration\" />
+    <Folder Include="DrivenAdapters\AuthentificationAdapters\" />
+    <Folder Include="DrivenAdapters\AuthentificationAdapters\Configuration\" />
+    <Folder Include="DrivenAdapters\Entities\" />
+    <Folder Include="DrivenAdapters\Entities\Account\" />
+    <Folder Include="DrivenAdapters\Migrations\" />
+    <Folder Include="DrivenAdapters\Services\" />
+    <Folder Include="DrivingAdapters\" />
+    <Folder Include="DrivingAdapters\DTOs\" />
+    <Folder Include="DrivingAdapters\RestAdapters\" />
+    <Folder Include="DrivingAdapters\Mappings\" />
+    <Folder Include="DrivingAdapters\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

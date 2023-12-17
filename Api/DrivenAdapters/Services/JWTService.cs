@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Api.Models;
+using Domain.Models.Account;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,7 +20,7 @@ public class JWTService
         _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
     }
 
-    public string CreateJWT(User user)
+    public string CreateJWT(IUser user)
     {
         List<Claim> userClaims = new()
         {

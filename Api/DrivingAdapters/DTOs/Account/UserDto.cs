@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Api.DTOs.Account
+namespace Api.DrivingAdapters.DTOs.Account
 {
-	public class UserDto
+    public class UserDto
 	{
 		public string LastName { get; set; }
 

@@ -29,7 +29,7 @@ namespace Domain.UseCases.Account
 
         }
 
-        private Task<IUser?> FindUserByEmail(String email)
+        private Task<IUser?> FindUserByEmail(string email)
         {
             return _accountPersistancePort.GetUserByEmail(email);
         }

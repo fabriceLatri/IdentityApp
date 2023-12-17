@@ -1,9 +1,9 @@
 ﻿using System;
-using Api.Models;
+using Api.DrivenAdapters.Entities.Account;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Data
+namespace Api.DrivenAdapters.DatabaseAdapters
 {
 	public class Context : IdentityDbContext<User>
 	{

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Api.DTOs.Account
+namespace Api.DrivingAdapters.DTOs.Account
 {
-	public class RegisterDto
+    public class RegisterDto
 	{
 		[Required]
         [StringLength(15, MinimumLength = 3, ErrorMessage = "Last name must be at least {2}, and maximum {1} characters")]
