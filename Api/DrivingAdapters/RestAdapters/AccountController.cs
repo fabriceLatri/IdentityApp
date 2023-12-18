@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Api.DrivenAdapters.Entities.Account;
 using Api.DrivingAdapters.DTOs.Account;
 using AutoMapper;
+using Domain.Exceptions.Account;
 using Domain.Models.Account;
 using Domain.Ports.Driving.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -82,29 +83,14 @@ namespace Api.DrivingAdapters.RestAdapters
                     return StatusCode(500, "Unexpected type for result");
                 }
             }
+            catch (EmailAlreadyUsedException emailAlreadyUsedEx)
+            {
+                return BadRequest(emailAlreadyUsedEx.Message);
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, $"Internal Error: {ex.Message}");
             }
-            
-
-
-            //if (await CheckEmailExists(model.Email)) return BadRequest($"An existing account is using {model.Email} email address. Please try with another one");
-
-            //User userToAdd = new()
-            //{
-            //    FirstName = model.FirstName.ToLower(),
-            //    LastName = model.LastName.ToLower(),
-            //    UserName = model.Email.ToLower(),
-            //    Email = model.Email.ToLower(),
-            //    EmailConfirmed = true,
-            //};
-
-            //var result = await _userManager.CreateAsync(userToAdd, model.Password);
-
-            //if (!result.Succeeded) return BadRequest(result.Errors);
-
-            //return new ObjectResult(value: "Your account has been created, you can login") { StatusCode = StatusCodes.Status201Created };
         }
 
         #region Private Helper Methods
