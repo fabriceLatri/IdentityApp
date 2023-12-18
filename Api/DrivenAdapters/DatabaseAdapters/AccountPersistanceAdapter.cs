@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Api.DrivenAdapters.Entities.Account;
+using Domain.Exceptions.Account;
 using Domain.Models.Account;
 using Domain.Ports.Driven.Account;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,22 @@ namespace Api.DrivenAdapters.DatabaseAdapters
 		{
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public async Task<object> CreateUser(string firstname, string lastname, string email, string password)
+        {
+            User user = new()
+            {
+                FirstName = firstname,
+                LastName = lastname,
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            return result;
         }
 
         public async Task<IUser> GetUserByEmail(string email)

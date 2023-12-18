@@ -24,21 +24,21 @@ namespace Api.DrivingAdapters.RestAdapters
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly ILoginCase _loginCase;
+        private readonly IAccountCase _accountCase;
 
         public AccountController(
             JWTService jwtService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             IMapper mapper,
-            ILoginCase loginCase
+            IAccountCase accountCase
             )
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
-            _loginCase = loginCase;
+            _accountCase = accountCase;
         }
 
         [Authorize]
@@ -55,7 +55,7 @@ namespace Api.DrivingAdapters.RestAdapters
         {
             try
             {
-                var user = await _loginCase.Execute(model.Email, model.Password);
+                var user = await _accountCase.ExecuteLogin(model.Email, model.Password);
 
                 return _mapper.Map<UserDto>(user);
             } catch (Exception ex)
@@ -67,22 +67,44 @@ namespace Api.DrivingAdapters.RestAdapters
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto model)
         {
-            if (await CheckEmailExists(model.Email)) return BadRequest($"An existing account is using {model.Email} email address. Please try with another one");
-
-            User userToAdd = new()
+            try
             {
-                FirstName = model.FirstName.ToLower(),
-                LastName = model.LastName.ToLower(),
-                UserName = model.Email.ToLower(),
-                Email = model.Email.ToLower(),
-                EmailConfirmed = true,
-            };
+                var result = await _accountCase.ExecuteRegister(model.FirstName, model.LastName, model.Email, model.Password);
 
-            var result = await _userManager.CreateAsync(userToAdd, model.Password);
+                if (result is IdentityResult identityResult)
+                {
+                    if (!identityResult.Succeeded) return BadRequest(identityResult.Errors);
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+                    return StatusCode(201, "Your account has been created, you can login");
+                }
+                else
+                {
+                    return StatusCode(500, "Unexpected type for result");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
 
-            return new ObjectResult(value: "Your account has been created, you can login") { StatusCode = StatusCodes.Status201Created };
+
+            //if (await CheckEmailExists(model.Email)) return BadRequest($"An existing account is using {model.Email} email address. Please try with another one");
+
+            //User userToAdd = new()
+            //{
+            //    FirstName = model.FirstName.ToLower(),
+            //    LastName = model.LastName.ToLower(),
+            //    UserName = model.Email.ToLower(),
+            //    Email = model.Email.ToLower(),
+            //    EmailConfirmed = true,
+            //};
+
+            //var result = await _userManager.CreateAsync(userToAdd, model.Password);
+
+            //if (!result.Succeeded) return BadRequest(result.Errors);
+
+            //return new ObjectResult(value: "Your account has been created, you can login") { StatusCode = StatusCodes.Status201Created };
         }
 
         #region Private Helper Methods
