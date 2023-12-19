@@ -10,6 +10,8 @@ namespace Domain.Ports.Driven.Account
 		public Task<bool> VerifyPassword(IUser user, string password);
 
 		public Task<object> CreateUser(string firstname, string lastname, string email, string password);
+
+		public Task<IUser> RefreshUserToken(string emailClaim);
 	}
 }
 

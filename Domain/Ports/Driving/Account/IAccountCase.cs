@@ -9,6 +9,7 @@ namespace Domain.Ports.Driving.Account
 
         Task<object> ExecuteRegister(string firstname, string lastname, string email, string password);
 
+        Task<IUser> ExecuteRefreshUserToken(string emailClaim);
     }
 }
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Api.DrivenAdapters.Entities.Account
 
 {
-	public class User : IdentityUser, IUser
+	public class User: IdentityUser, IUser
     {
         public string FirstName { get; set; }
 
