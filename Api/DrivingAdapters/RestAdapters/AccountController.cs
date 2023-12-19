@@ -8,7 +8,6 @@ using Domain.Exceptions.Account;
 using Domain.Models.Account;
 using Domain.Ports.Driving.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,23 +20,14 @@ namespace Api.DrivingAdapters.RestAdapters
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly JWTService _jwtService;
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IAccountCase _accountCase;
 
         public AccountController(
-            JWTService jwtService,
-            SignInManager<User> signInManager,
-            UserManager<User> userManager,
             IMapper mapper,
             IAccountCase accountCase
             )
         {
-            _jwtService = jwtService;
-            _signInManager = signInManager;
-            _userManager = userManager;
             _mapper = mapper;
             _accountCase = accountCase;
         }
@@ -46,9 +36,11 @@ namespace Api.DrivingAdapters.RestAdapters
         [HttpGet("refresh-user-token")]
         public async Task<ActionResult<UserDto>> RefreshUserToken()
         {
-            IUser user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+            string emailClaim = User.FindFirst(ClaimTypes.Email)?.Value;
+            IUser user = await _accountCase.ExecuteRefreshUserToken(emailClaim);
+            
 
-            return CreateApplicationUserDto(user);
+            return _mapper.Map<UserDto>(user);
         }
 
         [HttpPost("login")]
@@ -92,20 +84,6 @@ namespace Api.DrivingAdapters.RestAdapters
                 return StatusCode(500, $"Internal Error: {ex.Message}");
             }
         }
-
-        #region Private Helper Methods
-        private UserDto CreateApplicationUserDto(IUser user)
-        {
-            UserDto dto = _mapper.Map<UserDto>(user);
-
-            return dto;
-        }
-
-        private async Task<bool> CheckEmailExists(string email)
-        {
-            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
-        }
-        #endregion
     }
 }
 

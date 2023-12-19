@@ -19,6 +19,7 @@ namespace Api.DrivenAdapters.DatabaseAdapters
             _signInManager = signInManager;
         }
 
+        #region public methods
         public async Task<object> CreateUser(string firstname, string lastname, string email, string password)
         {
             User user = new()
@@ -42,12 +43,18 @@ namespace Api.DrivenAdapters.DatabaseAdapters
             return user;
         }
 
+        public async Task<IUser> RefreshUserToken(string emailClaim)
+        {
+            return await _userManager.FindByEmailAsync(emailClaim);
+        }
+
         public async Task<bool> VerifyPassword(IUser user, string password)
         {
             var result = await _signInManager.CheckPasswordSignInAsync((User)user, password, false);
 
             return result.Succeeded;
         }
+#endregion
     }
 }
 

@@ -15,6 +15,8 @@ namespace Domain.UseCases.Account
             _accountPersistancePort = accountPersistancePort;
         }
 
+
+        #region public Execute methods
         public async Task<IUser> ExecuteLogin(string email, string password)
         {
             IUser? user = await FindUserByEmail(email) ?? throw new UserNotFoundException("Invalid email or password");
@@ -40,6 +42,13 @@ namespace Domain.UseCases.Account
 
         }
 
+        public async Task<IUser> ExecuteRefreshUserToken(string emailClaim)
+        {
+            return await _accountPersistancePort.RefreshUserToken(emailClaim);
+        }
+        #endregion
+
+        #region private methods
         private Task<IUser?> FindUserByEmail(string email)
         {
             return _accountPersistancePort.GetUserByEmail(email);
@@ -54,6 +63,7 @@ namespace Domain.UseCases.Account
         {
             return _accountPersistancePort.CreateUser(firstname, lastname, email, password);
         }
+        #endregion
     }
 }
 
