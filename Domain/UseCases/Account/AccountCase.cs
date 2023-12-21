@@ -1,23 +1,29 @@
 ﻿using System;
 using Domain.Models.Account;
 using Domain.Ports.Driven.Account;
-using Domain.Ports.Driving.Account;
+using Domain.Ports.Driving.UseCases;
 using Domain.Exceptions.Account;
+using Domain.Ports.Driving.DTOs.Account;
 
 namespace Domain.UseCases.Account
 {
-	public class AccountCase : IAccountCase
-	{
+    public class AccountCase : IAccountCase
+    {
         private readonly IAccountPersistancePort _accountPersistancePort;
+        private readonly IAccountAuthentificationPort _accountAuthentificationPort;
 
-        public AccountCase(IAccountPersistancePort accountPersistancePort)
-		{
+        private readonly IAccountMapperPort<IUser, IUserDto> _accountMapper;
+
+        public AccountCase(IAccountPersistancePort accountPersistancePort, IAccountAuthentificationPort accountAuthentificationPort, IAccountMapperPort<IUser, IUserDto> accountMapper)
+        {
             _accountPersistancePort = accountPersistancePort;
+            _accountAuthentificationPort = accountAuthentificationPort;
+            _accountMapper = accountMapper;
         }
 
 
         #region public Execute methods
-        public async Task<IUser> ExecuteLogin(string email, string password)
+        public async Task<IUserDto> ExecuteLogin(string email, string password)
         {
             IUser? user = await FindUserByEmail(email) ?? throw new UserNotFoundException("Invalid email or password");
 
@@ -27,8 +33,9 @@ namespace Domain.UseCases.Account
 
             if (!result) throw new InvalidCredentialsException("Invalid email or password");
 
-            return user;
+            var token = _accountAuthentificationPort.CreateToken(user);
 
+            return _accountMapper.MapTo(user, token);
         }
 
         public async Task<object> ExecuteRegister(string firstname, string lastname, string email, string password)

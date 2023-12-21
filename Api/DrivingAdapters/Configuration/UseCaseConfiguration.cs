@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Ports.Driving.Account;
+using Domain.Ports.Driving.UseCases;
 using Domain.UseCases.Account;
 using Microsoft.Extensions.DependencyInjection;
 
