@@ -3,7 +3,7 @@ namespace Domain.Models.Account
 {
 	public interface IUser
 	{
-        public string Id { get; set; }
+		public string Id { get; set; }
 
 		public string Email { get; set; }
 
@@ -12,7 +12,5 @@ namespace Domain.Models.Account
 		public string LastName { get; set; }
 
 		public bool EmailConfirmed();
-
-
 	}
 }

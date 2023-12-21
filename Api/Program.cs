@@ -2,10 +2,13 @@
 using Api.DrivenAdapters.AuthentificationAdapters.Configuration;
 using Api.DrivenAdapters.DatabaseAdapters;
 using Api.DrivenAdapters.DatabaseAdapters.Configuration;
-using Api.DrivenAdapters.Entities.Account;
 using Api.DrivingAdapters.Configuration;
+using Api.DrivingAdapters.DTOs.Account;
+using Api.DrivingAdapters.Mappings.Account;
+using Domain;
 using Domain.Models.Account;
 using Domain.Ports.Driven.Account;
+using Domain.Ports.Driving.DTOs.Account;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,10 +35,9 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddUseCases();
 
 
-builder.Services.AddScoped<JWTService>();
-builder.Services.AddScoped<IUser, User>();
-
-builder.Services.AddTransient<IAccountPersistancePort, AccountPersistanceAdapter>();
+builder.Services.AddSingleton<IAccountAuthentificationPort, JWTAuthentificationAdapter>();
+builder.Services.AddScoped<IAccountMapperPort<IUser, IUserDto>, AccountMapperAdapter>();
+builder.Services.AddScoped<IAccountPersistancePort, AccountPersistanceAdapter>();
 
 // Defining our Identity Service
 builder.Services.AddIdentification();
