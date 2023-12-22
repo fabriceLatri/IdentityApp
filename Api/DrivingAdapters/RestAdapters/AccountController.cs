@@ -19,27 +19,23 @@ namespace Api.DrivingAdapters.RestAdapters
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IAccountCase _accountCase;
 
         public AccountController(
-            IMapper mapper,
             IAccountCase accountCase
             )
         {
-            _mapper = mapper;
             _accountCase = accountCase;
         }
 
         [Authorize]
         [HttpGet("refresh-user-token")]
-        public async Task<ActionResult<UserDto>> RefreshUserToken()
+        public async Task<ActionResult<IUserDto>> RefreshUserToken()
         {
             string emailClaim = User.FindFirst(ClaimTypes.Email)?.Value;
-            IUser user = await _accountCase.ExecuteRefreshUserToken(emailClaim);
+            IUserDto userDto = await _accountCase.ExecuteRefreshUserToken(emailClaim);
 
-
-            return _mapper.Map<UserDto>(user);
+            return Ok(userDto);
         }
 
         [HttpPost("login")]

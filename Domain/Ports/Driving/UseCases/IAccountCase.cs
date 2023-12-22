@@ -10,7 +10,7 @@ namespace Domain.Ports.Driving.UseCases
 
         Task<object> ExecuteRegister(string firstname, string lastname, string email, string password);
 
-        Task<IUser> ExecuteRefreshUserToken(string emailClaim);
+        Task<IUserDto> ExecuteRefreshUserToken(string emailClaim);
     }
 }
 
