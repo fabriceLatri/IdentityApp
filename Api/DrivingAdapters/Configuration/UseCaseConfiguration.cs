@@ -9,7 +9,7 @@ namespace Api.DrivingAdapters.Configuration
 	{
 		public static IServiceCollection AddUseCases(this IServiceCollection services)
 		{
-			services.AddTransient<IAccountCase, AccountCase>();
+			services.AddScoped<IAccountCase, AccountCase>();
 
 			return services;
 		}

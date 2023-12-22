@@ -44,18 +44,16 @@ public class AuthentificationAdapterTest
     // Add more assertions as needed...
   }
 
-  private string GenerateRandomKey(int keySizeInBits)
+  private static string GenerateRandomKey(int keySizeInBits)
   {
-    using (var rng = new RNGCryptoServiceProvider())
-    {
-      byte[] keyBytes = new byte[keySizeInBits / 8];
+    using var rng = RandomNumberGenerator.Create();
+    byte[] keyBytes = new byte[keySizeInBits / 8];
 
-      rng.GetBytes(keyBytes);
+    rng.GetBytes(keyBytes);
 
-      // Convert the byte array to a hexadecimal string
-      string keyString = BitConverter.ToString(keyBytes).Replace("-", string.Empty);
+    // Convert the byte array to a hexadecimal string
+    string keyString = BitConverter.ToString(keyBytes).Replace("-", string.Empty);
 
-      return keyString;
-    }
+    return keyString;
   }
 }
