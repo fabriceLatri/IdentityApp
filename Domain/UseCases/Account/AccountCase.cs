@@ -49,9 +49,13 @@ namespace Domain.UseCases.Account
 
         }
 
-        public async Task<IUser> ExecuteRefreshUserToken(string emailClaim)
+        public async Task<IUserDto> ExecuteRefreshUserToken(string emailClaim)
         {
-            return await _accountPersistancePort.RefreshUserToken(emailClaim);
+            var user = await _accountPersistancePort.RefreshUserToken(emailClaim);
+
+            string token = _accountAuthentificationPort.CreateToken(user);
+
+            return _accountMapper.MapTo(user, token);
         }
         #endregion
 

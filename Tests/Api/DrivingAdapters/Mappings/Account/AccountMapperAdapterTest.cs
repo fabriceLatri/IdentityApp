@@ -13,7 +13,7 @@ namespace Tests;
 
 public class AccountMapperAdapterTest
 {
-  private static IMapper _mapper;
+  private static IMapper? _mapper;
 
   public AccountMapperAdapterTest()
   {

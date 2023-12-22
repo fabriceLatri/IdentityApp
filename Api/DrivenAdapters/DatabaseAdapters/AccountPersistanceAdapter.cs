@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Api.DrivenAdapters.DatabaseAdapters
 {
-	public class AccountPersistanceAdapter : IAccountPersistancePort
-	{
+    public class AccountPersistanceAdapter : IAccountPersistancePort
+    {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public AccountPersistanceAdapter(UserManager<User> userManager, SignInManager<User> signInManager)
-		{
+        {
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -54,7 +54,7 @@ namespace Api.DrivenAdapters.DatabaseAdapters
 
             return result.Succeeded;
         }
-#endregion
+        #endregion
     }
 }
 
