@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Register } from '@/account/models/register';
+import { IRegisterRequest } from '@/domain/ports/account/DTOs/requests/register';
 import { environment } from 'environments/environment.development';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { environment } from 'environments/environment.development';
 export class AccountService {
   constructor(private http: HttpClient) {}
 
-  register(model: Register) {
+  register(model: IRegisterRequest) {
     const registerUrl = `${environment.appUrl}account/register`;
     return this.http.post(registerUrl, model);
   }
