@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from '@/app-routing.module';
-import { AppComponent } from '@/app.component';
-import { HomeComponent } from '@/home/home.component';
-import { SharedModule } from '@/shared/shared.module';
-import { PlayComponent } from './play/play.component';
+import { AppRoutingModule } from '@/presentation/app-routing.module';
+import { AppComponent } from '@presentation/app.component';
+import { HomeComponent } from '@presentation/home/home.component';
+import { SharedModule } from '@presentation/shared/shared.module';
+import { PlayComponent } from '@presentation/play/play.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, PlayComponent],

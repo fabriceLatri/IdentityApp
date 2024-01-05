@@ -4,10 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NotFoundComponent } from '@/shared/components/errors/not-found/not-found.component';
-import { ValidationMessagesComponent } from '@/shared/components/errors/validation-messages/validation-messages.component';
-import { NavbarComponent } from '@/shared/layouts/navbar/navbar.component';
-import { FooterComponent } from '@/shared/layouts/footer/footer.component';
+import { NotFoundComponent } from '@presentation/shared/components/errors/not-found/not-found.component';
+import { ValidationMessagesComponent } from '@presentation/shared/components/errors/validation-messages/validation-messages.component';
+import { NavbarComponent } from '@presentation/shared/layouts/navbar/navbar.component';
+import { FooterComponent } from '@presentation/shared/layouts/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { FooterComponent } from '@/shared/layouts/footer/footer.component';
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ValidationMessagesComponent,
   ],
 })
 export class SharedModule {}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.DrivingAdapters.DTOs.Account;
@@ -64,7 +65,9 @@ namespace Api.DrivingAdapters.RestAdapters
                 {
                     if (!identityResult.Succeeded) return BadRequest(identityResult.Errors);
 
-                    return StatusCode(201, "Your account has been created, you can login");
+                    var responseObject = new { Message = "Your account has been created, you can login" };
+
+                    return CreatedAtAction(nameof(Register), responseObject);
                 }
                 else
                 {

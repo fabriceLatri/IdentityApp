@@ -1,4 +1,5 @@
-﻿using Api;
+﻿using System.Linq;
+using Api;
 using Api.DrivenAdapters.AuthentificationAdapters.Configuration;
 using Api.DrivenAdapters.DatabaseAdapters;
 using Api.DrivenAdapters.DatabaseAdapters.Configuration;
@@ -10,6 +11,7 @@ using Domain.Models.Account;
 using Domain.Ports.Driven.Account;
 using Domain.Ports.Driving.DTOs.Account;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +52,24 @@ builder.Services.AddAuthentification(jwtKey, jwtIssuer);
 
 // Cors
 builder.Services.AddCors();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = actionContext =>
+    {
+        var errors = actionContext.ModelState
+        .Where(x => x.Value.Errors.Count > 0)
+        .SelectMany(x => x.Value.Errors)
+        .Select(x => x.ErrorMessage).ToArray();
+
+        var toReturn = new
+        {
+            Errors = errors
+        };
+
+        return new BadRequestObjectResult(toReturn);
+    };
+});
 
 var app = builder.Build();
 
