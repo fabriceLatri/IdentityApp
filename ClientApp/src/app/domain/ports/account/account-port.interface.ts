@@ -1,7 +1,6 @@
-import { Observable } from 'rxjs';
-import { IRegisterRequest } from '@/domain/ports/account/DTOs/requests/register';
-import { IRegisterResponse } from '@/domain/ports/account/DTOs/responses/register';
+import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
 
 export interface IAccountPort {
-  register(register: IRegisterRequest): Observable<IRegisterResponse>;
+  register(register: IRegisterRequest): void;
+  errorMessages: string[];
 }

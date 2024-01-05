@@ -24,6 +24,7 @@ import { FooterComponent } from '@presentation/shared/layouts/footer/footer.comp
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ValidationMessagesComponent,
   ],
 })
 export class SharedModule {}

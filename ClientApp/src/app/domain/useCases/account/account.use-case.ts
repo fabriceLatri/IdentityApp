@@ -1,16 +1,14 @@
-import { Observable } from 'rxjs';
-
-import { IRegisterRequest } from '@/domain/ports/account/DTOs/requests/register';
-import { IRegisterResponse } from '@/domain/ports/account/DTOs/responses/register';
+import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
 import { IAccountPort } from '@/domain/ports/account/account-port.interface';
-import { IUseCase } from '@domain/useCases/base/use-case.interface';
 
-export class AccountUseCase
-  implements IUseCase<IRegisterRequest, IRegisterResponse>
-{
+export class AccountUseCase {
   constructor(private readonly accountPort: IAccountPort) {}
 
-  execute(params: IRegisterRequest): Observable<IRegisterResponse> {
-    return this.accountPort.register(params);
+  executeRegister(params: IRegisterRequest): void {
+    this.accountPort.register(params);
+  }
+
+  getErrorMessages(): string[] {
+    return this.accountPort.errorMessages;
   }
 }

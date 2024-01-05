@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountService } from '@presentation/account/account.service';
+import { AccountUseCase } from '@domain/useCases/account/account.use-case';
+import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
   errorMessages: string[] = [];
 
   constructor(
-    private accoutService: AccountService,
+    private readonly accountUseCase: AccountUseCase,
     private formBuilder: FormBuilder
   ) {}
 
@@ -57,15 +58,18 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  getErrorMessages(): string[] {
+    return this.accountUseCase.getErrorMessages();
+  }
+
   register() {
     this.isSubmitted = true;
     this.errorMessages = [];
 
-    if (this.registerForm.valid) {
-      this.accoutService.register(this.registerForm.value).subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.error(error),
-      });
-    }
+    // if (this.registerForm.valid) {
+    const registerRequest: IRegisterRequest = this.registerForm.value;
+    this.accountUseCase.executeRegister(registerRequest);
+
+    // }
   }
 }

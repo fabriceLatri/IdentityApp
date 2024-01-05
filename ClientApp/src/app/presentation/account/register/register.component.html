@@ -26,13 +26,16 @@
             "
           />
           <label for="firstName">First name</label>
-          <span
-            class="text-danger"
-            *ngIf="
-              isSubmitted && registerForm.get('firstName')?.hasError('required')
-            "
-            >FirstName is required.</span
-          >
+          @if (isSubmitted &&
+          registerForm.get('firstName')?.hasError('required')) {
+          <span class="text-danger">First Name is required.</span>
+          } @if (isSubmitted &&
+          (registerForm.get('firstName')?.hasError('minlength') ||
+          registerForm.get('firstName')?.hasError('maxlength'))) {
+          <span class="text-danger">
+            First name must be at least 3, and maximum 15 characters
+          </span>
+          }
         </div>
         <div class="form-floating mb-3">
           <input
@@ -41,8 +44,21 @@
             class="form-control"
             formControlName="lastName"
             id="lastName"
+            [class.is-invalid]="
+              isSubmitted && registerForm.get('lastName')?.errors
+            "
           />
           <label for="lastName">Last name</label>
+          @if (isSubmitted &&
+          registerForm.get('lastName')?.hasError('required')) {
+          <span class="text-danger">Last Name is required.</span>
+          } @if (isSubmitted &&
+          (registerForm.get('lastName')?.hasError('minlength') ||
+          registerForm.get('lastName')?.hasError('maxlength'))) {
+          <span class="text-danger">
+            Last name must be at least 3, and maximum 15 characters
+          </span>
+          }
         </div>
         <div class="form-floating mb-3">
           <input
@@ -52,8 +68,17 @@
             formControlName="email"
             id="email"
             autocomplete="off"
+            [class.is-invalid]="
+              isSubmitted && registerForm.get('email')?.errors
+            "
           />
           <label for="email">Email</label>
+          @if (isSubmitted && registerForm.get('email')?.hasError('required')) {
+          <span class="text-danger">Email is required</span>
+          } @if (isSubmitted && registerForm.get('email')?.hasError('pattern'))
+          {
+          <span class="text-danger">Invalid email address</span>
+          }
         </div>
         <div class="form-floating mb-3">
           <input
@@ -62,9 +87,30 @@
             class="form-control"
             formControlName="password"
             id="password"
+            [class.is-invalid]="
+              isSubmitted && registerForm.get('password')?.errors
+            "
           />
           <label for="password">Password</label>
+          @if (isSubmitted &&
+          registerForm.get('password')?.hasError('required')) {
+          <span class="text-danger">Password is required</span>
+          } @if (isSubmitted &&
+          (registerForm.get('password')?.hasError('minlength') ||
+          registerForm.get('password')?.hasError('maxlength'))) {
+          <span class="text-danger"
+            >Password must be at least 6, and maximum 15 characters</span
+          >
+          }
         </div>
+
+        @if (getErrorMessages().length > 0) {
+        <div class="form-floatin">
+          <app-validation-messages
+            [errorMessages]="getErrorMessages()"
+          ></app-validation-messages>
+        </div>
+        }
 
         <div class="d-grid mt-4 px-1">
           <button class="btn btn-lg btn-info" type="submit">Log In</button>

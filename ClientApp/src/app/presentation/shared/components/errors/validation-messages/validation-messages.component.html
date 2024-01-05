@@ -1,1 +1,7 @@
-<p>validation-messages works!</p>
+@if (errorMessages) {
+<ul class="text-danger">
+  @for (errorMessage of errorMessages; track $index) {
+  <li>{{ errorMessage }}</li>
+  }
+</ul>
+}

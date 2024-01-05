@@ -24,7 +24,7 @@
     "paths": {
       "@/*": ["app/*"],
       "@domain/*": ["app/domain/*"],
-      "@adapters/*": ["app/adapters/*"],
+      "@infrastructure/*": ["app/infrastructure/*"],
       "@presentation/*": ["app/presentation/*"]
     }
   },
