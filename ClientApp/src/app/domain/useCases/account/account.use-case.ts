@@ -4,11 +4,7 @@ import { IAccountPort } from '@/domain/ports/account/account-port.interface';
 export class AccountUseCase {
   constructor(private readonly accountPort: IAccountPort) {}
 
-  executeRegister(params: IRegisterRequest): void {
-    this.accountPort.register(params);
-  }
-
-  getErrorMessages(): string[] {
-    return this.accountPort.errorMessages;
+  async executeRegister(params: IRegisterRequest): Promise<string> {
+    return await this.accountPort.register(params);
   }
 }

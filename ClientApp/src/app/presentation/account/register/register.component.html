@@ -104,16 +104,16 @@
           }
         </div>
 
-        @if (getErrorMessages().length > 0) {
+        @if (errorMessages.length > 0) {
         <div class="form-floatin">
           <app-validation-messages
-            [errorMessages]="getErrorMessages()"
+            [errorMessages]="errorMessages"
           ></app-validation-messages>
         </div>
         }
 
         <div class="d-grid mt-4 px-1">
-          <button class="btn btn-lg btn-info" type="submit">Log In</button>
+          <button class="btn btn-lg btn-info" type="submit">Register</button>
         </div>
       </form>
 

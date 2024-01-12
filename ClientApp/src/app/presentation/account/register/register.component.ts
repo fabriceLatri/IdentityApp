@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountUseCase } from '@domain/useCases/account/account.use-case';
 import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
+import { CatchAll } from '@/presentation/shared/decorators';
+import { AccountErrorResponse } from '@/infrastructure/errors';
 
 @Component({
   selector: 'app-register',
@@ -58,18 +60,26 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  getErrorMessages(): string[] {
-    return this.accountUseCase.getErrorMessages();
-  }
+  // @CatchAll<RegisterComponent>((err, instance) => {
+  //   instance.displayErrorMessages(err);
+  // })
 
-  register() {
+  @CatchAll<RegisterComponent>((err, ctx) => {
+    ctx.displayErrorMessages(err);
+  })
+  async register() {
     this.isSubmitted = true;
     this.errorMessages = [];
 
     // if (this.registerForm.valid) {
     const registerRequest: IRegisterRequest = this.registerForm.value;
-    this.accountUseCase.executeRegister(registerRequest);
+    await this.accountUseCase.executeRegister(registerRequest);
+  }
 
-    // }
+  private displayErrorMessages(error: Error) {
+    this.errorMessages =
+      error instanceof AccountErrorResponse
+        ? error.errorMessages
+        : [error.message];
   }
 }
