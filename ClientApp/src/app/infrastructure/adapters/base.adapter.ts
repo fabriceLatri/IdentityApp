@@ -1,7 +1,7 @@
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 
 export class BaseAdapter {
-  mapTo<T>(target: ClassConstructor<T>, src: unknown): T {
+  mapTo<T, S>(target: ClassConstructor<T>, src: S): T {
     return plainToInstance(target, src);
   }
 }

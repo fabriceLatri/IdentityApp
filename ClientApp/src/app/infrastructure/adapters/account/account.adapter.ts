@@ -3,12 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
 import { IAccountPort } from '@/domain/ports/account/account-port.interface';
-import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
-import { RegisterResponse } from '@/domain/ports/DTOs/responses/account/register';
+import { IRegisterRequest } from '@/infrastructure/DTOs/requests/account/register';
+import { RegisterDto } from '@/infrastructure/DTOs/responses/account/register.dto';
 
 import { ApiConstant } from '@infrastructure/constants/api';
 import { BaseAdapter } from '@infrastructure/adapters/base.adapter';
 import { AccountErrorResponse } from '@/infrastructure/errors';
+import { AccountRegisterEntity } from '@/domain/models/entities';
+import { IAccountRegisterEntity } from '@/domain/models/interfaces';
 
 export const IAccountPortToken = new InjectionToken<IAccountPort>(
   'IAccountPort'
@@ -20,19 +22,19 @@ export class AccountAdapter extends BaseAdapter implements IAccountPort {
     super();
   }
 
-  async register(register: IRegisterRequest): Promise<string | never> {
+  async register(register: IRegisterRequest): Promise<IAccountRegisterEntity> {
     try {
-      const response$ = this.http.post<RegisterResponse>(
+      const response$ = this.http.post<RegisterDto>(
         ApiConstant.registerUrl,
         register
       );
 
-      const response: RegisterResponse = this.mapTo(
-        RegisterResponse,
-        await lastValueFrom(response$)
-      );
+      const registerEntity: AccountRegisterEntity = this.mapTo<
+        AccountRegisterEntity,
+        RegisterDto
+      >(AccountRegisterEntity, await lastValueFrom(response$));
 
-      return response.message;
+      return registerEntity;
     } catch (err) {
       if (err instanceof HttpErrorResponse) {
         if (err.error.errors) {

@@ -65,7 +65,7 @@ namespace Api.DrivingAdapters.RestAdapters
                 {
                     if (!identityResult.Succeeded) return BadRequest(identityResult.Errors);
 
-                    var responseObject = new { Code = 201, Message = "Your account has been created, you can login" };
+                    var responseObject = new { Code = 201, Title = "Account Created", Message = "Your account has been created, you can login" };
 
                     return CreatedAtAction(nameof(Register), responseObject);
                 }

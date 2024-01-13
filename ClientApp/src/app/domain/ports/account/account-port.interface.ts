@@ -1,5 +1,6 @@
-import { IRegisterRequest } from '@/domain/ports/DTOs/requests/account/register';
+import { IAccountRegisterEntity } from '@/domain/models/interfaces';
+import { IRegisterRequest } from '@/infrastructure/DTOs/requests/account/register';
 
 export interface IAccountPort {
-  register(register: IRegisterRequest): Promise<string | never>;
+  register(register: IRegisterRequest): Promise<IAccountRegisterEntity>;
 }
