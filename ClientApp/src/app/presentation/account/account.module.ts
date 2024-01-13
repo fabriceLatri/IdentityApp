@@ -10,10 +10,16 @@ import {
   IAccountPortToken,
 } from '@infrastructure/adapters/account/account.adapter';
 import { IAccountPort } from '@/domain/ports/account/account-port.interface';
+import { SharedServiceToken } from '@presentation/shared/services/injectionToken';
+import { SharedService } from '@presentation/shared/services/shared.service';
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [CommonModule, AccountRoutingModule, SharedModule],
   providers: [
+    {
+      provide: SharedServiceToken,
+      useClass: SharedService,
+    },
     { provide: IAccountPortToken, useClass: AccountAdapter },
     {
       provide: AccountUseCase,
