@@ -1,4 +1,4 @@
 export interface IAccountRegisterEntity {
-  title: string;
-  message: string;
+  readonly title: string;
+  readonly message: string;
 }

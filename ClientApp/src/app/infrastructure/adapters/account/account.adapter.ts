@@ -11,6 +11,7 @@ import { BaseAdapter } from '@infrastructure/adapters/base.adapter';
 import { AccountErrorResponse } from '@/infrastructure/errors';
 import { AccountRegisterEntity } from '@/domain/models/entities';
 import { IAccountRegisterEntity } from '@/domain/models/interfaces';
+import { RegisterEntity } from '@/infrastructure/models/entities/account/register.entity';
 
 export const IAccountPortToken = new InjectionToken<IAccountPort>(
   'IAccountPort'
@@ -32,7 +33,7 @@ export class AccountAdapter extends BaseAdapter implements IAccountPort {
       const registerEntity: AccountRegisterEntity = this.mapTo<
         AccountRegisterEntity,
         RegisterDto
-      >(AccountRegisterEntity, await lastValueFrom(response$));
+      >(RegisterEntity, await lastValueFrom(response$));
 
       return registerEntity;
     } catch (err) {
