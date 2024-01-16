@@ -11,7 +11,9 @@ import {
   IAccountPortToken,
   AccountAdapter,
 } from '@/infrastructure/adapters/account/account.adapter';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '@/presentation/shared/shared.module';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -20,6 +22,7 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent],
+      imports: [HttpClientModule, SharedModule, ModalModule.forRoot()],
       providers: [
         Router,
         FormBuilder,

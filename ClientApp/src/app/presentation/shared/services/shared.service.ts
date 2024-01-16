@@ -10,7 +10,7 @@ import { NotificationComponent } from '../components/modals/notification/notific
 })
 export class SharedService implements ISharedService {
   //#region Public Fields
-  bsModalRef?: BsModalRef;
+  bsModalRef?: BsModalRef<NotificationComponent>;
   //#endregion
   constructor(private readonly modalService: BsModalService) {}
 
