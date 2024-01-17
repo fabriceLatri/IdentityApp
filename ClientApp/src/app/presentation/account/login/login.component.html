@@ -1,17 +1,47 @@
 <div class="d-flex justify-content-center">
   <div class="col-12 col-lg-5">
     <main class="form-signin">
-      <form>
+      <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="login()">
         <div class="text-center mb-4">
           <h3 class="mb-3 font-weight-normal">Login</h3>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" placeholder="Email" class="form-control" />
+          <input
+            type="text"
+            formControlName="email"
+            placeholder="Email"
+            class="form-control"
+            id="email"
+            [class.is-invalid]="isSubmitted && loginForm.get('email')?.errors"
+          />
           <label for="email">Email</label>
+          @if (isSubmitted && loginForm.get('email')?.hasError('required')) {
+          <span class="text-danger">Email is required.</span>
+          } @if (isSubmitted && loginForm.get('email')?.hasError('pattern')) {
+          <span class="text-danger">Invalid email address</span>
+          }
         </div>
         <div class="form-floating mb-3">
-          <input type="password" placeholder="password" class="form-control" />
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="password"
+            class="form-control"
+            id="password"
+            [class.is-invalid]="
+              isSubmitted && loginForm.get('password')?.errors
+            "
+          />
           <label for="password">Password</label>
+          @if (isSubmitted && loginForm.get('password')?.hasError('required')) {
+          <span class="text-danger">Password is required</span>
+          } @if (isSubmitted &&
+          (loginForm.get('password')?.hasError('minlength') ||
+          loginForm.get('password')?.hasError('maxlength'))) {
+          <span class="text-danger"
+            >Password must be at least 6, and maximum 15 characters</span
+          >
+          }
         </div>
 
         <div class="d-grid mt-4 px-1">

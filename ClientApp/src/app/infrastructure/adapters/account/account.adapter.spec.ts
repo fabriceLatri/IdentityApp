@@ -1,17 +1,18 @@
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 
-import { IAccountPort } from '@/domain/ports/account/account-port.interface';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { IAccountPort } from '@/domain/ports/interfaces';
+
 import {
   AccountAdapter,
   IAccountPortToken,
 } from '@infrastructure/adapters/account/account.adapter';
-import { RegisterDto } from '@/infrastructure/DTOs/responses/account/register.dto';
-import { AccountRegisterEntity } from '@/domain/models/entities';
-import { IRegisterRequest } from '@/infrastructure/DTOs/requests/account/register';
+import type { RegisterDto } from '@domain/models/DTOs/responses';
+
+import { IRegisterRequest } from '@domain/models/DTOs/requests';
 import { ApiConstant } from '@/infrastructure/constants/api';
 import { RegisterEntity } from '@/infrastructure/models/entities/account/register.entity';
 import { IAccountRegisterEntity } from '@/domain/models/interfaces';

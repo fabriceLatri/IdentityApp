@@ -4,14 +4,22 @@ import { LoginComponent } from '@presentation/account/login/login.component';
 import { RegisterComponent } from '@presentation/account/register/register.component';
 import { AccountRoutingModule } from '@presentation/account/account-routing.module';
 import { SharedModule } from '@presentation/shared/shared.module';
-import { AccountUseCase } from '@domain/useCases/account/account.use-case';
+import { LoginUseCase, RegisterUseCase } from '@domain/useCases';
+
+/**
+ * TODO: Create index.ts file in adapters folder
+ */
 import {
   AccountAdapter,
   IAccountPortToken,
 } from '@infrastructure/adapters/account/account.adapter';
-import { IAccountPort } from '@/domain/ports/account/account-port.interface';
+import { IAccountPort } from '@domain/ports/interfaces';
 import { SharedServiceToken } from '@presentation/shared/services/injectionToken';
 import { SharedService } from '@presentation/shared/services/shared.service';
+import {
+  ILoginUseCaseToken,
+  IRegisterUseCaseToken,
+} from '@presentation/account/shared/tokens';
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [CommonModule, AccountRoutingModule, SharedModule],
@@ -22,9 +30,15 @@ import { SharedService } from '@presentation/shared/services/shared.service';
     },
     { provide: IAccountPortToken, useClass: AccountAdapter },
     {
-      provide: AccountUseCase,
+      provide: ILoginUseCaseToken,
       useFactory: (accountAdapter: IAccountPort) =>
-        new AccountUseCase(accountAdapter),
+        new LoginUseCase(accountAdapter),
+      deps: [IAccountPortToken],
+    },
+    {
+      provide: IRegisterUseCaseToken,
+      useFactory: (accountAdapter: IAccountPort) =>
+        new RegisterUseCase(accountAdapter),
       deps: [IAccountPortToken],
     },
   ],

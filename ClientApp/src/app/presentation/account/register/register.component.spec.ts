@@ -3,10 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { AccountUseCase } from '@/domain/useCases/account/account.use-case';
+import { RegisterUseCase } from '@/domain/useCases/account/register.use-case';
 import { SharedServiceToken } from '@/presentation/shared/services/injectionToken';
 import { SharedService } from '@/presentation/shared/services/shared.service';
-import { IAccountPort } from '@/domain/ports/account/account-port.interface';
+import { IAccountPort } from '@/domain/ports/interfaces';
 import {
   IAccountPortToken,
   AccountAdapter,
@@ -29,9 +29,9 @@ describe('RegisterComponent', () => {
         { provide: IAccountPortToken, useClass: AccountAdapter },
         BsModalService,
         {
-          provide: AccountUseCase,
+          provide: RegisterUseCase,
           useFactory: (accountAdapter: IAccountPort) =>
-            new AccountUseCase(accountAdapter),
+            new RegisterUseCase(accountAdapter),
           deps: [IAccountPortToken],
         },
         {
