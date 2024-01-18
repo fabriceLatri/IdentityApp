@@ -17,8 +17,6 @@
           <label for="email">Email</label>
           @if (isSubmitted && loginForm.get('email')?.hasError('required')) {
           <span class="text-danger">Email is required.</span>
-          } @if (isSubmitted && loginForm.get('email')?.hasError('pattern')) {
-          <span class="text-danger">Invalid email address</span>
           }
         </div>
         <div class="form-floating mb-3">
@@ -35,14 +33,16 @@
           <label for="password">Password</label>
           @if (isSubmitted && loginForm.get('password')?.hasError('required')) {
           <span class="text-danger">Password is required</span>
-          } @if (isSubmitted &&
-          (loginForm.get('password')?.hasError('minlength') ||
-          loginForm.get('password')?.hasError('maxlength'))) {
-          <span class="text-danger"
-            >Password must be at least 6, and maximum 15 characters</span
-          >
           }
         </div>
+
+        @if (errorMessages.length > 0) {
+        <div class="form-floatin">
+          <app-validation-messages
+            [errorMessages]="errorMessages"
+          ></app-validation-messages>
+        </div>
+        }
 
         <div class="d-grid mt-4 px-1">
           <button class="btn btn-lg btn-info" type="submit">Log In</button>

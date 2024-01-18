@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ValidatorHelper } from '@infrastructure/validators/constants';
 import { ILoginUseCaseToken } from '../shared/tokens';
 import { ILoginUseCase } from '@domain/models/interfaces/useCases';
 import { CatchAll } from '@presentation/shared/decorators';
@@ -51,28 +50,15 @@ export class LoginComponent implements OnInit {
       loginRequest
     );
 
-    console.log(`loginEntity: ${loginEntity}`);
+    this.isSubmitted = false;
   }
   //#endregion
 
   //#region Private Methods
   private initializeForm(): void {
     this.loginForm = this.formBuilder.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(ValidatorHelper.VALIDATE_EMAIL_PATTERN),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(15),
-        ],
-      ],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 
