@@ -1,6 +1,6 @@
 import { ILoginRequest } from '@domain/models/DTOs/requests';
-import { IAccountLoginEntity } from '@domain/models/interfaces';
+import { IUser } from '@domain/models/interfaces';
 
 export interface ILoginUseCase {
-  execute(params: ILoginRequest): Promise<IAccountLoginEntity>;
+  execute(params: ILoginRequest): Promise<IUser>;
 }

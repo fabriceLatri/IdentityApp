@@ -24,6 +24,7 @@
             >
           </li>
         </ul>
+        @if ((user$ | async) === null) {
         <ul class="navbar-nav">
           <li class="nav-item">
             <a
@@ -52,6 +53,17 @@
             </a>
           </li>
         </ul>
+        }
+
+        <div class="d-flex align-items-center" *ngIf="user$ | async as user">
+          <a class="text-white link-btn">
+            Hi
+            <span class="h3 text-warning">{{
+              user.firstName | titlecase
+            }}</span>
+          </a>
+          <a class="btn btn-secondary ms-2" (click)="logout()">Logout</a>
+        </div>
       </div>
     </div>
   </nav>

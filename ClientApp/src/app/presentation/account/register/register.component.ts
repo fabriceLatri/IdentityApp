@@ -9,10 +9,10 @@ import { IAccountRegisterEntity } from '@domain/models/interfaces';
 import { AccountErrorResponse } from '@infrastructure/errors';
 import { ValidatorHelper } from '@infrastructure/validators/constants';
 
-import { IRegisterUseCaseToken } from '@presentation/account/shared/tokens';
 import { CatchAll } from '@presentation/shared/decorators';
 import { ISharedService } from '@presentation/shared/services/interfaces';
 import { SharedServiceToken } from '@presentation/shared/services/injectionToken';
+import { IRegisterUseCaseToken } from '@presentation/shared/injectionTokens';
 
 @Component({
   selector: 'app-register',

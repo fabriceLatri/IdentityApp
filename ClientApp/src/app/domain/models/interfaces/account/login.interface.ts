@@ -1,1 +1,5 @@
-export interface IAccountLoginEntity {}
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  token: string;
+}

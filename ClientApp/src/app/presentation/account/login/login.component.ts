@@ -2,12 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ILoginUseCaseToken } from '../shared/tokens';
 import { ILoginUseCase } from '@domain/models/interfaces/useCases';
 import { CatchAll } from '@presentation/shared/decorators';
 import { AccountErrorResponse } from '@infrastructure/errors';
 import { ILoginRequest } from '@domain/models/DTOs/requests';
-import { IAccountLoginEntity } from '@domain/models/interfaces';
+import { IUser } from '@domain/models/interfaces';
+import { ILoginUseCaseToken } from '@presentation/shared/injectionTokens';
 
 @Component({
   selector: 'app-login',
@@ -46,9 +46,7 @@ export class LoginComponent implements OnInit {
 
     const loginRequest: ILoginRequest = this.loginForm.value;
 
-    const loginEntity: IAccountLoginEntity = await this.loginUseCase.execute(
-      loginRequest
-    );
+    const user: IUser = await this.loginUseCase.execute(loginRequest);
 
     this.isSubmitted = false;
   }
