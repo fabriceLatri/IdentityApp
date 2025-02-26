@@ -1,11 +1,11 @@
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/bin/Debug/net7.0/Domain.deps.json
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/bin/Debug/net7.0/Domain.dll
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/bin/Debug/net7.0/Domain.pdb
-/Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.AssemblyInfoInputs.cache
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.AssemblyInfo.cs
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache
+/Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.sourcelink.json
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.dll
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/refint/Domain.dll
 /Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/obj/Debug/net7.0/Domain.pdb

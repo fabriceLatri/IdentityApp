@@ -7,14 +7,14 @@ using Domain.Ports.Driving.DTOs.Account;
 
 namespace Domain.UseCases.Account
 {
-    public class AccountCase : IAccountCase
+    public class AccountService : IAccountService
     {
         private readonly IAccountPersistancePort _accountPersistancePort;
         private readonly IAccountAuthentificationPort _accountAuthentificationPort;
 
         private readonly IAccountMapperPort<IUser, IUserDto> _accountMapper;
 
-        public AccountCase(IAccountPersistancePort accountPersistancePort, IAccountAuthentificationPort accountAuthentificationPort, IAccountMapperPort<IUser, IUserDto> accountMapper)
+        public AccountService(IAccountPersistancePort accountPersistancePort, IAccountAuthentificationPort accountAuthentificationPort, IAccountMapperPort<IUser, IUserDto> accountMapper)
         {
             _accountPersistancePort = accountPersistancePort;
             _accountAuthentificationPort = accountAuthentificationPort;

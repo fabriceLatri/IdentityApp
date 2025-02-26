@@ -1,5 +1,5 @@
 # Use the official .NET Core SDK as a parent image
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -13,12 +13,12 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Build the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 
 # Expose the port your application will run on
-EXPOSE 80
+EXPOSE 5186
 
 # Start the application
 ENTRYPOINT ["dotnet", "Api.dll"]

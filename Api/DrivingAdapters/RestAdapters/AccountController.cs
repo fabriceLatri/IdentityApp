@@ -20,10 +20,10 @@ namespace Api.DrivingAdapters.RestAdapters
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountCase _accountCase;
+        private readonly IAccountService _accountCase;
 
         public AccountController(
-            IAccountCase accountCase
+            IAccountService accountCase
             )
         {
             _accountCase = accountCase;

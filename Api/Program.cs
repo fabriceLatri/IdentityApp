@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +31,12 @@ builder.Services.AddSwaggerGen();
 var dbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDatabase(dbConnection);
 
+builder.Logging.AddConsole();
+
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-// UseCases
-builder.Services.AddUseCases();
+builder.Services.AddServices();
 
 
 builder.Services.AddSingleton<IAccountAuthentificationPort, JWTAuthentificationAdapter>();
@@ -52,6 +54,7 @@ builder.Services.AddAuthentification(jwtKey, jwtIssuer);
 
 // Cors
 builder.Services.AddCors();
+
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -73,10 +76,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 var app = builder.Build();
 
-app.UseCors(opt =>
-{
+app.UseCors(opt => {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(builder.Configuration["JWT:ClientUrl"]);
 });
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

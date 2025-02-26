@@ -4,7 +4,7 @@ using Domain.Ports.Driving.DTOs.Account;
 
 namespace Domain.Ports.Driving.UseCases
 {
-    public interface IAccountCase
+    public interface IAccountService
     {
         Task<IUserDto> ExecuteLogin(string email, string password);
 
