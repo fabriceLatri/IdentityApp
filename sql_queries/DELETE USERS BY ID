@@ -1,2 +1,0 @@
-DELETE FROM [IdentityApp].[dbo].[AspNetUsers]
-WHERE [Id] = '0283ebfa-6878-48e0-8aec-7bb901eaa924'

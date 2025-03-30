@@ -29,13 +29,13 @@ public class JWTAuthentificationAdapter : IAccountAuthentificationPort
 
     public string CreateJWT(IUser user)
     {
-        List<Claim> userClaims = new()
-        {
+        List<Claim> userClaims =
+        [
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.FirstName),
             new Claim(ClaimTypes.Surname, user.LastName),
-        };
+        ];
 
         var credentials = new SigningCredentials(_jwtKey, SecurityAlgorithms.HmacSha512Signature);
         var tokenDescriptor = new SecurityTokenDescriptor

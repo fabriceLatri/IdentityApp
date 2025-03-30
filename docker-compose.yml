@@ -15,6 +15,9 @@ services:
     volumes:
       - ./data:/var/opt/mssql/data
     platform: linux/amd64
+    profiles:
+      - dev
+      - prod
 
   identity-app-rest-api:
     container_name: "rest-api"
@@ -29,6 +32,8 @@ services:
       - app-network
     environment:
       - ConnectionStrings__DefaultConnection = ${MSSQL_STRING_CONNECTION}
+    profiles:
+      - prod
 
 networks:
   app-network:

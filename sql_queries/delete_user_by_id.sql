@@ -1,0 +1,1 @@
+DELETE FROM AspNetUsers WHERE [Id] = '8b75275a-4f2e-4f0f-bc48-fa10e3dcd99b'
