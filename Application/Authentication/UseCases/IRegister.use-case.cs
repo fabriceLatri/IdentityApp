@@ -1,9 +1,9 @@
 using Application.Authentication.DTOs.Register;
-using Domain.Entities.Users;
+using Application.Users.DTOs;
 
 namespace Application.Authentication.UseCases;
 
 public interface IRegisterUseCase
 {
-  Task<IUser> Execute(IRegisterDTO registerDTO);
+  Task<IUserDto> Execute(IRegisterDTO registerDTO);
 }

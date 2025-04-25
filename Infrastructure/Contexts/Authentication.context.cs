@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Contexts;
 
-public class AuthenticationContext  : IdentityDbContext<UserModel>
+public class AuthenticationContext(DbContextOptions<AuthenticationContext> options) : IdentityDbContext<UserModel>(options)
 	{
-		public AuthenticationContext(DbContextOptions<AuthenticationContext> options) : base(options)
-		{
-		}
-	}
+}

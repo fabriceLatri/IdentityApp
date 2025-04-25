@@ -10,7 +10,7 @@ public static class UserDtoFactory
     return new UserDto()
     {
       Id = user.Id,
-      Email = user.Email,
+      Email = user.Email ?? "",
       Firstname = user.FirstName,
       Lastname = user.LastName,
       IsEmailConfirmed = user.IsEmailConfirmed,

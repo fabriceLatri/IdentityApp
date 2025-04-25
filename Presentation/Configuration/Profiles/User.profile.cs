@@ -16,5 +16,16 @@ public class UserProfile : Profile
 
     CreateMap<UserModel, IUser>()
     .ConstructUsing(userModel => UsersFactory.Create(userModel.Id, userModel.Email, userModel.FirstName, userModel.LastName, userModel.IsEmailConfirmed()));
+
+    CreateMap<IUser, UserModel>().ConstructUsing(user => new UserModel()
+    {
+      Id = user.Id,
+      Email = user.Email,
+      FirstName = user.FirstName,
+      LastName = user.LastName,
+      EmailConfirmed = user.IsEmailConfirmed,
+      RefreshToken = user.RefreshToken,
+      ExpiresIn = user.ExpiresIn
+    });
   }
 }

@@ -11,6 +11,10 @@ public class UserModel :  IdentityUser, IUser
 
   public DateTime DateTimeCreated { get; set; } = DateTime.UtcNow;
 
+  public string? RefreshToken { get; set; }
+
+  public long? ExpiresIn { get; set; }
+
   bool IUser.IsEmailConfirmed => IsEmailConfirmed();
 
   public bool IsEmailConfirmed()

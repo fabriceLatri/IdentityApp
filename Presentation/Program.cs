@@ -15,7 +15,7 @@ builder.Services.AddOpenApi();
 var dbConnection = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
 builder.Services.AddDatabase(dbConnection);
-builder.Services.AddRegisterUseCase();
+builder.Services.AddUseCases();
 builder.Services.AddIdentification();
 
 // To be able to authenticate users using JWT
@@ -25,7 +25,7 @@ string jwtIssuer = builder.Configuration["JWT:Issuer"]!;
 builder.Services.AddAuthentification(jwtKey, jwtIssuer);
 
 // AutoMapper
-builder.Services.AddAutoMapper(typeof(UserProfile), typeof(LoginProfile));
+builder.Services.AddAutoMapper(typeof(UserProfile), typeof(AuthenticationProfile));
 
 // Cors
 builder.Services.AddCors();

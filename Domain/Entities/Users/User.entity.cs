@@ -7,4 +7,6 @@ public record User() : IUser
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
     public bool IsEmailConfirmed { get; init; }
+    public string? RefreshToken { get; init; }
+    public long? ExpiresIn { get; init; }
 }
