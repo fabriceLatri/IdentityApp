@@ -23,7 +23,7 @@ services:
     container_name: "rest-api"
     build:
       context: .
-      dockerfile: ./Api/Dockerfile
+      dockerfile: ./Presentation/Dockerfile
     depends_on:
       - sql-server
     ports:
@@ -31,7 +31,8 @@ services:
     networks:
       - app-network
     environment:
-      - ConnectionStrings__DefaultConnection = ${MSSQL_STRING_CONNECTION}
+      - ConnectionStrings__DefaultConnection=${MSSQL_STRING_CONNECTION}
+      - JWT__Key=${JWT__Key}
     profiles:
       - prod
 

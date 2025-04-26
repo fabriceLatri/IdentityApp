@@ -20,7 +20,15 @@ public class AuthenticationSecurity : IAuthenticationSecurity
     public AuthenticationSecurity(IConfiguration config)
     {
         _config = config;
-        _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"] ?? ""));
+        var jwtKey = _config["JWT:Key"];
+
+        if (string.IsNullOrEmpty(jwtKey))
+        {
+            throw new InvalidOperationException("La clé JWT est manquante ou vide dans la configuration.");
+        }
+
+        _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+        // _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"] ?? ""));
     }
     public string getCredentials(IUser user)
     {

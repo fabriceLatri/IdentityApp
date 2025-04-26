@@ -1,10 +1,21 @@
+using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Configuration.Database;
 using Presentation.Configuration.Identification;
 using Presentation.Configuration.Profiles;
 using Presentation.Configuration.UseCases;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    ContentRootPath = Directory.GetCurrentDirectory(),
+});
+
+if (builder.Environment.IsDevelopment()) {
+    var envPath = Path.Combine("..", ".env");
+
+    builder.Configuration.AddDotNetEnv(envPath, DotNetEnv.LoadOptions.TraversePath());
+}
 
 builder.Services.AddControllers();
 
@@ -62,13 +73,22 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment()) 
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+var endpointDataSource = app.Services.GetRequiredService<EndpointDataSource>();
+foreach (var endpoint in endpointDataSource.Endpoints)
+{
+    Console.WriteLine($"Endpoint: {endpoint.DisplayName}");
+}
 
 app.Run();
 
