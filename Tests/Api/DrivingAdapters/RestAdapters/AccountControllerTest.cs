@@ -9,16 +9,13 @@ namespace Tests;
 
 public class AccountControllerTest
 {
-  private readonly Mock<IAccountCase> _mockAccountCase;
-  private readonly Mock<IMapper> _mockMapper;
-  private readonly Mock<AccountController> _mockAccountController;
+  private readonly Mock<IAccountService> _mockAccountCase = new();
+  private readonly Mock<IMapper> _mockMapper = new();
+  private readonly Mock<AccountController> _mockAccountController = new();
 
 
   public AccountControllerTest()
   {
-    _mockAccountCase = new Mock<IAccountCase>();
-    _mockMapper = new Mock<IMapper>();
-    _mockAccountController = new Mock<AccountController>();
   }
 
   [Fact]

@@ -11,6 +11,9 @@ import { ValidationMessagesComponent } from '@presentation/shared/components/err
 import { NavbarComponent } from '@presentation/shared/layouts/navbar/navbar.component';
 import { FooterComponent } from '@presentation/shared/layouts/footer/footer.component';
 import { NotificationComponent } from '@presentation/shared/components/modals/notification/notification.component';
+import { AccountModule } from '@presentation/account/account.module';
+import { IAccountPortToken } from './injectionTokens';
+import { AccountAdapter } from '@infrastructure/adapters/account/account.adapter';
 
 @NgModule({
   declarations: [
@@ -36,5 +39,6 @@ import { NotificationComponent } from '@presentation/shared/components/modals/no
     HttpClientModule,
     ValidationMessagesComponent,
   ],
+  providers: [{ provide: IAccountPortToken, useExisting: AccountAdapter }],
 })
 export class SharedModule {}

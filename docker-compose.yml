@@ -1,8 +1,8 @@
-version: '3.8'
 
 services:
   sql-server:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server
     env_file:
       - .env
     environment:
@@ -14,19 +14,27 @@ services:
       - app-network
     volumes:
       - ./data:/var/opt/mssql/data
+    platform: linux/amd64
+    profiles:
+      - dev
+      - prod
 
-  # your-dotnet-app:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Api/Dockerfile
-  #   depends_on:
-  #     - sql-server
-  #   ports:
-  #     - '5186:80'
-  #   networks:
-  #     - app-network
-  #   environment:
-  #     - ConnectionStrings__DefaultConnection = ${MSSQL_STRING_CONNECTION}
+  identity-app-rest-api:
+    container_name: "rest-api"
+    build:
+      context: .
+      dockerfile: ./Presentation/Dockerfile
+    depends_on:
+      - sql-server
+    ports:
+      - '5186:5186'
+    networks:
+      - app-network
+    environment:
+      - ConnectionStrings__DefaultConnection=${MSSQL_STRING_CONNECTION}
+      - JWT__Key=${JWT__Key}
+    profiles:
+      - prod
 
 networks:
   app-network:

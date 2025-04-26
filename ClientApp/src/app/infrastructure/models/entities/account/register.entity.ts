@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { AccountRegisterEntity } from '@/domain/models/entities';
+import { AccountRegisterEntity } from '@domain/models/entities';
 
 export class RegisterEntity extends AccountRegisterEntity {
   @Expose({ name: 'title' })

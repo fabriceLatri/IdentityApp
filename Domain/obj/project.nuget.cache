@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5pfQ1OcRY0v9o0b4nwlFHc8k2CvR9fZj6BnH43FeAgjcy8n1BENpMvHboijuLv7P6OpB2/9ZKH/zqLutJNZibA==",
+  "dgSpecHash": "AQe+XzEfXkI=",
   "success": true,
-  "projectFilePath": "/Users/fabrice/Dev/Udemy/CSharp/IdentityApp/Domain/Domain.csproj",
+  "projectFilePath": "/Users/fabrice/Dev/Udemy/CSharp/IdentityApp/IdentityApp/Domain/Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

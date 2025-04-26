@@ -1,13 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountUseCase } from '@domain/useCases/account/account.use-case';
-import { IRegisterRequest } from '@/infrastructure/DTOs/requests/account/register';
-import { CatchAll } from '@/presentation/shared/decorators';
-import { AccountErrorResponse } from '@/infrastructure/errors';
-import { IAccountRegisterEntity } from '@/domain/models/interfaces';
-import { ISharedService } from '@/presentation/shared/services/interfaces';
-import { SharedServiceToken } from '@/presentation/shared/services/injectionToken';
+
+import { IRegisterUseCase } from '@domain/models/interfaces/useCases';
+import { IRegisterRequest } from '@domain/models/DTOs/requests/account/register';
+import { IAccountRegisterEntity } from '@domain/models/interfaces';
+
+import { AccountErrorResponse } from '@infrastructure/errors';
+import { ValidatorHelper } from '@infrastructure/validators/constants';
+
+import { CatchAll } from '@presentation/shared/decorators';
+import { ISharedService } from '@presentation/shared/services/interfaces';
+import { SharedServiceToken } from '@presentation/shared/services/injectionToken';
+import { IRegisterUseCaseToken } from '@presentation/shared/injectionTokens';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +26,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     @Inject(SharedServiceToken) private readonly sharedService: ISharedService,
-    private readonly accountUseCase: AccountUseCase,
+    @Inject(IRegisterUseCaseToken)
+    private readonly registerUseCase: IRegisterUseCase,
     private readonly router: Router,
     private formBuilder: FormBuilder
   ) {}
@@ -52,7 +58,7 @@ export class RegisterComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$'),
+          Validators.pattern(ValidatorHelper.VALIDATE_EMAIL_PATTERN),
         ],
       ],
       password: [
@@ -66,21 +72,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // @CatchAll<RegisterComponent>((err, instance) => {
-  //   instance.displayErrorMessages(err);
-  // })
-
   @CatchAll<RegisterComponent>((err, ctx) => {
     ctx.displayErrorMessages(err);
+    ctx.isSubmitted = false;
   })
   async register() {
     this.isSubmitted = true;
     this.errorMessages = [];
 
-    // if (this.registerForm.valid) {
     const registerRequest: IRegisterRequest = this.registerForm.value;
     const registerEntity: IAccountRegisterEntity =
-      await this.accountUseCase.executeRegister(registerRequest);
+      await this.registerUseCase.execute(registerRequest);
 
     this.sharedService.showNotification(
       true,

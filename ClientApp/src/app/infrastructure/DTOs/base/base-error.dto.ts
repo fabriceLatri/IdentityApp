@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 
-import { IBaseErrorResponse } from '@/infrastructure/DTOs/responses/base/base-response.interface';
+import { IBaseErrorResponse } from '@/domain/models/DTOs/responses/base/base-response.interface';
 
 export class BaseErrorResponse implements IBaseErrorResponse {
   @Expose({ name: 'code' })
