@@ -41,7 +41,10 @@ jobs:
 
     - name: Build and Run docker-compose with profile "prod"
       run: |
+        MSSQL_STRING_CONNECTION="${{ secrets.MSSQL_STRING_CONNECTION }}" \
+        JWT__Key="${{ secrets.JWT__Key }}" \
         docker compose --profile prod up --build -d
+      working-directory: IdentityApp
 
     - name: Check running containers
       run: docker ps
