@@ -42,8 +42,8 @@ jobs:
 
     - name: Build and Run docker-compose with profile "prod"
       run: |
-        MSSQL_STRING_CONNECTION="${{ secrets.MSSQL_STRING_CONNECTION }}" \
-        JWT__Key="${{ secrets.JWT__Key }}" \
+        export MSSQL_STRING_CONNECTION="${{ secrets.MSSQL_STRING_CONNECTION }}"
+        export JWT__Key="${{ secrets.JWT__Key }}"
         docker compose --profile prod up --build -d
 
     - name: Check running containers
