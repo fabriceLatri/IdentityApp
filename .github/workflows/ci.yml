@@ -1,0 +1,65 @@
+name: CI Build Test Security Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test-security:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore IdentityApp.sln
+
+    - name: Build solution
+      run: dotnet build IdentityApp.sln --configuration Release
+
+    - name: Run unit tests
+      run: dotnet test Tests/Tests.csproj --no-build --verbosity normal
+
+    - name: Install Docker Compose v2
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose-plugin
+
+    - name: Build and Run docker-compose with profile "prod"
+      run: |
+        docker compose --profile prod up --build -d
+
+    - name: Check running containers
+      run: docker ps
+
+    - name: Wait for containers to be fully up
+      run: sleep 10
+
+    - name: Shutdown and clean containers
+      run: docker compose down
+
+    # 🚨 OWASP Dependency Check
+    - name: Run OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'IdentityApp'
+        path: '.'
+        format: 'HTML'
+        out: 'dependency-check-report'
+
+    # (Optionnel) Upload report as artifact
+    - name: Upload Dependency-Check Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-check-report
+        path: dependency-check-report
