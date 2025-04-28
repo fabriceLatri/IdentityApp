@@ -1,0 +1,72 @@
+name: CI Build Test Security Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test-security:
+    environment: pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore IdentityApp.sln
+
+    - name: Run unit tests
+      run: dotnet test Tests/Tests.csproj --configuration Release --verbosity normal
+
+    - name: Install Docker + Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ca-certificates curl gnupg
+        sudo install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        echo \
+          "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu noble stable" | \
+          sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    - name: Build and Run docker-compose with profile "prod"
+      run: |
+        export MSSQL_STRING_CONNECTION="${{ secrets.MSSQL_STRING_CONNECTION }}"
+        export JWT__Key="${{ secrets.JWT__Key }}"
+        docker compose --profile prod up --build -d
+
+    - name: Check running containers
+      run: docker ps
+
+    - name: Wait for containers to be fully up
+      run: sleep 10
+
+    - name: Shutdown and clean containers
+      run: docker compose down
+
+    # 🚨 OWASP Dependency Check
+    - name: Run OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'IdentityApp'
+        path: '.'
+        format: 'HTML'
+        out: 'dependency-check-report'
+
+    # (Optionnel) Upload report as artifact
+    - name: Upload Dependency-Check Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-check-report
+        path: dependency-check-report
