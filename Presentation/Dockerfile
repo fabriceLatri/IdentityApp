@@ -8,13 +8,14 @@ COPY Domain/Domain.csproj ./Domain/
 COPY Application/Application.csproj ./Application/
 COPY Infrastructure/Infrastructure.csproj ./Infrastructure/
 COPY Presentation/Presentation.csproj ./Presentation/
+COPY Tests/Tests.csproj ./Tests/
 
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . .
 
-RUN dotnet publish -c Release -o out
+RUN dotnet publish Presentation/Presentation.csproj -c Release -o out
 
 # Build the runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
